@@ -65,3 +65,4 @@ class ModeloArima():
                 continue
 
         print(f"Mejor orden encontrado: {best_order} con AIC: {best_aic}")
+        self.corr = best_aic
