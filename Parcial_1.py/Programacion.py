@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import itertools
+from acf import acf_plot
 
 class ModeloArima():
     def __init__(self, Datos):
@@ -15,11 +16,10 @@ class ModeloArima():
         plt.title('Serie Temporal')
         plt.grid()
         plt.show()
-        plot_acf(self.datos)
-        plt.title('Autocorrelación')
+        acf_plot(self.datos,inx = 2)
         plt.show()
         plot_pacf(self.datos)
-        plt.title('Autocorrelación Parcial')
+        plt.title('Autocorrelación Function (AR)')
         plt.show()
 
 
