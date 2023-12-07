@@ -3,8 +3,6 @@ from statsmodels.tsa.api import VAR
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tools.eval_measures import rmse
 from itertools import permutations, product
-import tensorflow as tf
-from tensorflow import keras as ks
 
 def Tachos(data):
     data = pd.read_csv(data)
