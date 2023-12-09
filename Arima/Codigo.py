@@ -1,16 +1,15 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import pyreadstat
-import numpy as np
+from statsmodels.tsa.api import VAR
 from statsmodels.tsa.stattools import adfuller
+from statsmodels.tools.eval_measures import rmse
+from itertools import permutations, product
+import matplotlib.pyplot as plt
+import seaborn as sns
+from statsmodels.tsa.stattools import acf, pacf
+from statsmodels.tsa.arima.model import ARIMA
+import numpy as np
 import warnings
 import itertools
-from statsmodels.tsa.arima.model import ARIMA
-
-
-def readdta(archivo_stata):
-    datos, meta = pyreadstat.read_dta(archivo_stata)
-    return datos
 
 def Tachos(data):
     data = pd.read_csv(data)
@@ -23,6 +22,24 @@ def Tachos(data):
     data.set_index('fecha', inplace= True)
 
     return data
+
+
+def acf_ma(data, inx):
+    acf_result = acf(data, qstat=True)[inx]
+    t = len(acf_result)
+    plt.stem(np.arange(t), acf_result)
+    plt.title('Autocorrelation Function (MA)')
+    plt.xlabel('Lag')
+    plt.ylabel('Autocorrelation')
+
+def pacf_ar(data):
+    pacf_result = pacf(data, method='ols')
+    t = len(pacf_result)
+    plt.stem(np.arange(t), pacf_result)
+    plt.title('Partial Autocorrelation Function (AR)')
+    plt.xlabel('Order of AR')
+    plt.ylabel('Partial Autocorrelation')
+
 
 def DFuller(datos,steps = None):
     result = adfuller(datos,steps)
@@ -75,3 +92,8 @@ def ModeloARIMA(data, order, trend = None):
     pval = tabla_coeficientes[tabla_coeficientes.columns.values[4]]
     warnings.resetwarnings()
     return results, pval
+
+def Columnas(data, Busqueda):
+    Palabra = [cadena for cadena in data.columns if Busqueda in cadena]
+    for a in Palabra:
+        print(a)
