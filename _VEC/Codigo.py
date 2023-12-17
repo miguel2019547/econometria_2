@@ -149,3 +149,5 @@ def Columnas(data, Busqueda):
     Palabra = [cadena for cadena in data.columns if Busqueda in cadena]
     for a in Palabra:
         print(a)
+
+
